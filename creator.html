@@ -1,0 +1,54 @@
+<!-- HTML generated using hilite.me --><div style="background: #f0f3f3; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #006699; font-weight: bold">DROP</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_USER;
+<span style="color: #006699; font-weight: bold">DROP</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_GAME;
+<span style="color: #006699; font-weight: bold">DROP</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_LEADERBOARD;
+<span style="color: #006699; font-weight: bold">DROP</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_PARTICIPANT;
+<span style="color: #006699; font-weight: bold">DROP</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_MATCH;
+<span style="color: #006699; font-weight: bold">DROP</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_HISTORY;
+
+<span style="color: #006699; font-weight: bold">CREATE</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_USER (
+  NICKNAME <span style="color: #336666">VARCHAR</span>(<span style="color: #FF6600">15</span>) <span style="color: #006699; font-weight: bold">PRIMARY</span> <span style="color: #006699; font-weight: bold">KEY</span>,
+  PASSWORD <span style="color: #336666">VARCHAR</span>(<span style="color: #FF6600">160</span>),
+  <span style="color: #006699; font-weight: bold">ADMIN</span> <span style="color: #336666">BOOLEAN</span>,
+  EMAIL <span style="color: #336666">VARCHAR</span>(<span style="color: #FF6600">30</span>)
+);
+
+<span style="color: #006699; font-weight: bold">CREATE</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_GAME (
+  NAME <span style="color: #336666">VARCHAR</span>(<span style="color: #FF6600">25</span>) <span style="color: #006699; font-weight: bold">PRIMARY</span> <span style="color: #006699; font-weight: bold">KEY</span>,
+  MINPLAYER <span style="color: #336666">INT</span> <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>,
+  MAXPLAYER <span style="color: #336666">INT</span> <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>
+);
+
+<span style="color: #006699; font-weight: bold">CREATE</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_LEADERBOARD (
+  <span style="color: #006699; font-weight: bold">USER</span> <span style="color: #336666">VARCHAR</span>(<span style="color: #FF6600">15</span>) <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>,
+  GAME <span style="color: #336666">VARCHAR</span>(<span style="color: #FF6600">25</span>) <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>,
+  ELO <span style="color: #336666">INT</span>
+);
+
+<span style="color: #006699; font-weight: bold">CREATE</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_MATCH (
+  ID <span style="color: #336666">INT</span> <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span> AUTO_INCREMENT,
+  GAME <span style="color: #336666">VARCHAR</span>(<span style="color: #FF6600">25</span>),
+  DATESTAMP DATETIME <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>,
+  <span style="color: #006699; font-weight: bold">PRIMARY</span> <span style="color: #006699; font-weight: bold">KEY</span> (ID)
+);
+
+<span style="color: #006699; font-weight: bold">CREATE</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_PARTICIPANT (
+  USER_ID <span style="color: #336666">VARCHAR</span>(<span style="color: #FF6600">15</span>) <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>,
+  MATCH_ID <span style="color: #336666">INT</span> <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>,
+  TEAM <span style="color: #336666">INT</span>,
+  PLACE <span style="color: #336666">INT</span>,
+  ELO_FOR_MATCH <span style="color: #336666">INT</span>
+);
+
+<span style="color: #006699; font-weight: bold">CREATE</span> <span style="color: #006699; font-weight: bold">TABLE</span> GS_HISTORY (
+  USER_ID <span style="color: #336666">VARCHAR</span>(<span style="color: #FF6600">15</span>) <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>,
+  MATCH_ID <span style="color: #336666">INT</span> <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>,
+  TURN <span style="color: #336666">INT</span> <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>,
+  DESCRIPTION <span style="color: #336666">VARCHAR</span>(<span style="color: #FF6600">200</span>) <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>,
+  DATESTAMP DATETIME <span style="color: #006699; font-weight: bold">NOT</span> <span style="color: #006699; font-weight: bold">NULL</span>
+);
+
+<span style="color: #006699; font-weight: bold">INSERT</span> <span style="color: #006699; font-weight: bold">INTO</span> GS_GAME (NAME, MINPLAYER, MAXPLAYER) <span style="color: #006699; font-weight: bold">VALUES</span> (<span style="color: #CC3300">&#39;szachy&#39;</span>, <span style="color: #FF6600">2</span>, <span style="color: #FF6600">2</span>);
+<span style="color: #006699; font-weight: bold">INSERT</span> <span style="color: #006699; font-weight: bold">INTO</span> GS_GAME (NAME, MINPLAYER, MAXPLAYER) <span style="color: #006699; font-weight: bold">VALUES</span> (<span style="color: #CC3300">&#39;kosci&#39;</span>, <span style="color: #FF6600">1</span>, <span style="color: #FF6600">6</span>);
+<span style="color: #006699; font-weight: bold">INSERT</span> <span style="color: #006699; font-weight: bold">INTO</span> GS_GAME (NAME, MINPLAYER, MAXPLAYER) <span style="color: #006699; font-weight: bold">VALUES</span> (<span style="color: #CC3300">&#39;warcaby&#39;</span>, <span style="color: #FF6600">2</span>, <span style="color: #FF6600">2</span>);
+<span style="color: #006699; font-weight: bold">INSERT</span> <span style="color: #006699; font-weight: bold">INTO</span> GS_GAME (NAME, MINPLAYER, MAXPLAYER) <span style="color: #006699; font-weight: bold">VALUES</span> (<span style="color: #CC3300">&#39;chinczyk&#39;</span>, <span style="color: #FF6600">2</span>, <span style="color: #FF6600">4</span>);
+</pre></div>
